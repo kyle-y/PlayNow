@@ -318,6 +318,7 @@ public class SrsEncoder {
         }
     }
 
+    //使用x264编码后调用的方法
     private void onSoftEncodedData(byte[] es, long pts, boolean isKeyFrame) {
         ByteBuffer bb = ByteBuffer.wrap(es);
         vebi.offset = 0;

@@ -1,5 +1,6 @@
 package com.self.kyle.playnow;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.v4.view.ViewCompat;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity{
     private SrsPublisher mPublisher;
     private EmptyControlVideo video;
 
-    private String rtmpUrl = "rtmp://192.168.1.147:1935/live/stream";
+    private String rtmpUrl = "rtmp://192.168.1.149:1935/live/stream";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,9 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void initPublish(SrsCameraView cameraView) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
+        }
         mPublisher = new SrsPublisher(cameraView);
         //编码状态回调
         mPublisher.setEncodeHandler(new SrsEncodeHandler(new SrsEncodeHandler.SrsEncodeListener() {

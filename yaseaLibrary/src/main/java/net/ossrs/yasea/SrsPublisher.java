@@ -226,7 +226,9 @@ public class SrsPublisher {
     }
 
     public void setPreviewResolution(int width, int height) {
+        //为preview设置尺寸并返回
         int resolution[] = mCameraView.setPreviewResolution(width, height);
+
         mEncoder.setPreviewResolution(resolution[0], resolution[1]);
     }
 
@@ -267,10 +269,19 @@ public class SrsPublisher {
         sendAudioOnly = flag;
     }
 
+    /**
+     * 更换滤镜
+     * @param type
+     * @return
+     */
     public boolean switchCameraFilter(MagicFilterType type) {
         return mCameraView.setFilter(type);
     }
 
+    /**
+     * 转换摄像头
+     * @param id
+     */
     public void switchCameraFace(int id) {
         mCameraView.stopCamera();
         mCameraView.setCameraId(id);

@@ -36,22 +36,18 @@
                 android:onClick="push"
                 android:text="开始推流" />
         </LinearLayout>
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
 
         <com.self.kyle.widget.EmptyControlVideo
             android:id="@+id/emptyControlVideo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-        <Button
-            android:layout_width="160dp"
-            android:layout_height="40dp"
-            android:layout_gravity="bottom|center"
-            android:onClick="accept"
-            android:text="开始接收" />
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:layout_gravity="right" />
     </FrameLayout>
+
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom|center"
+        android:onClick="accept"
+        android:text="开始接收" />
 </LinearLayout>
