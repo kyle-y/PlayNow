@@ -2,6 +2,7 @@ package com.self.kyle.playnow;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -188,8 +189,8 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void accept(View view) {
+        video.setVisibility(View.VISIBLE);
         video.setUp(rtmpUrl, true, "");
-//        video.setUp("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", true, "");
         initTransition();
     }
 
@@ -225,6 +226,10 @@ public class MainActivity extends AppCompatActivity{
         return false;
     }
 
+    public void bigShow(View view) {
+        startActivity(new Intent(this, PlayActivity.class));
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -233,4 +238,6 @@ public class MainActivity extends AppCompatActivity{
         video.setVideoAllCallBack(null);
         GSYVideoManager.releaseAllVideos();
     }
+
+
 }
