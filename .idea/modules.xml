@@ -3,11 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PlayNow.iml" filepath="$PROJECT_DIR$/PlayNow.iml" />
-      <module fileurl="file://E:\workspace\self\PlayNow\PlayNow.iml" filepath="E:\workspace\self\PlayNow\PlayNow.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://E:\workspace\self\PlayNow\app\app.iml" filepath="E:\workspace\self\PlayNow\app\app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/yaseaLibrary/yaseaLibrary.iml" filepath="$PROJECT_DIR$/yaseaLibrary/yaseaLibrary.iml" />
-      <module fileurl="file://E:\workspace\self\PlayNow\yaseaLibrary\yaseaLibrary.iml" filepath="E:\workspace\self\PlayNow\yaseaLibrary\yaseaLibrary.iml" />
     </modules>
   </component>
 </project>
