@@ -94,30 +94,30 @@ public class SrsEncoder {
         }
 
         // the referent PTS for video and audio encoder.
-        mPresentTimeUs = System.nanoTime() / 1000;
+        mPresentTimeUs = System.nanoTime() / 1000;  //当前秒数
 
         // Note: the stride of resolution must be set as 16x for hard encoding with some chip like MTK
         // Since Y component is quadruple size as U and V component, the stride must be set as 32x
-        if (!useSoftEncoder && (vOutWidth % 32 != 0 || vOutHeight % 32 != 0)) {
+        if (!useSoftEncoder && (vOutWidth % 32 != 0 || vOutHeight % 32 != 0)) {  //如果使用硬编且宽或高有一个是32的倍数
             if (vmci.getName().contains("MTK")) {
                 //throw new AssertionError("MTK encoding revolution stride must be 32x");
             }
         }
 
-        setEncoderResolution(vOutWidth, vOutHeight);
-        setEncoderFps(VFPS);
-        setEncoderGop(VGOP);
+        setEncoderResolution(vOutWidth, vOutHeight);   //设置软编的输出宽高
+        setEncoderFps(VFPS);  //设置软编的帧率
+        setEncoderGop(VGOP);  //设置软编的每组帧的数量
         // Unfortunately for some android phone, the output fps is less than 10 limited by the
         // capacity of poor cheap chips even with x264. So for the sake of quick appearance of
         // the first picture on the player, a spare lower GOP value is suggested. But note that
         // lower GOP will produce more I frames and therefore more streaming data flow.
         // setEncoderGop(15);
-        setEncoderBitrate(vBitrate);
-        setEncoderPreset(x264Preset);
+        setEncoderBitrate(vBitrate);  //设置软编的码率
+        setEncoderPreset(x264Preset);  //设置软编的预制 veryfast、superfast
 
         if (useSoftEncoder) {
-            canSoftEncode = openSoftEncoder();
-            if (!canSoftEncode) {
+            canSoftEncode = openSoftEncoder();   //如果使用软编，打开软编
+            if (!canSoftEncode) {   //打开失败
                 return false;
             }
         }
@@ -125,16 +125,16 @@ public class SrsEncoder {
         // aencoder pcm to aac raw stream.
         // requires sdk level 16+, Android 4.1, 4.1.1, the JELLY_BEAN
         try {
-            aencoder = MediaCodec.createEncoderByType(ACODEC);
+            aencoder = MediaCodec.createEncoderByType(ACODEC);   //创建音频硬编码器
         } catch (IOException e) {
             Log.e(TAG, "create aencoder failed.");
             e.printStackTrace();
             return false;
         }
 
-        // setup the aencoder.
+        // setup the aencoder.  创建音频硬编配置
         // @see https://developer.android.com/reference/android/media/MediaCodec.html
-        int ach = aChannelConfig == AudioFormat.CHANNEL_IN_STEREO ? 2 : 1;
+        int ach = aChannelConfig == AudioFormat.CHANNEL_IN_STEREO ? 2 : 1;    //声道个数
         MediaFormat audioFormat = MediaFormat.createAudioFormat(ACODEC, ASAMPLERATE, ach);
         audioFormat.setInteger(MediaFormat.KEY_BIT_RATE, ABITRATE);
         audioFormat.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0);
@@ -530,6 +530,7 @@ public class SrsEncoder {
     }
 
     public AudioRecord chooseAudioRecord() {
+        //MIC, 44100, 优先双声道，16bit， 4倍最小缓存
         AudioRecord mic = new AudioRecord(MediaRecorder.AudioSource.DEFAULT, SrsEncoder.ASAMPLERATE,
             AudioFormat.CHANNEL_IN_STEREO, AudioFormat.ENCODING_PCM_16BIT, getPcmBufferSize() * 4);
         if (mic.getState() != AudioRecord.STATE_INITIALIZED) {

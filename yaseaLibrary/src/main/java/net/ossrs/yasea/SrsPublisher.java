@@ -73,28 +73,31 @@ public class SrsPublisher {
             return;
         }
 
-        if (AcousticEchoCanceler.isAvailable()) {
+        if (AcousticEchoCanceler.isAvailable()) {  //回声消除
             aec = AcousticEchoCanceler.create(mic.getAudioSessionId());
             if (aec != null) {
                 aec.setEnabled(true);
             }
         }
 
-        if (AutomaticGainControl.isAvailable()) {
+        if (AutomaticGainControl.isAvailable()) { //自动增强控制器
             agc = AutomaticGainControl.create(mic.getAudioSessionId());
             if (agc != null) {
                 agc.setEnabled(true);
             }
         }
 
+        //AudioEffect其他声音控制类：NoiseSuppressor:噪音抑制器、BassBoost:重低音调节器、Equalizer:均衡器、PresetReverb:预设音场控制器、Visualizer:示波器
+        //用法见：https://www.jianshu.com/p/cdd09b840500
+
         aworker = new Thread(new Runnable() {
             @Override
             public void run() {
-                android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_AUDIO);
-                mic.startRecording();
+                android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_AUDIO); //s设置为声音线程
+                mic.startRecording(); //开始录音
                 while (!Thread.interrupted()) {
                     if (sendVideoOnly) {
-                        mEncoder.onGetPcmFrame(mPcmBuffer, mPcmBuffer.length);
+                        mEncoder.onGetPcmFrame(mPcmBuffer, mPcmBuffer.length);  //不发送音频时，返回空的buffer
                         try {
                             // This is trivial...
                             Thread.sleep(20);
@@ -102,7 +105,7 @@ public class SrsPublisher {
                             break;
                         }
                     } else {
-                        int size = mic.read(mPcmBuffer, 0, mPcmBuffer.length);
+                        int size = mic.read(mPcmBuffer, 0, mPcmBuffer.length);  //发送音频时，将声音读到buffer中，并回调出去
                         if (size > 0) {
                             mEncoder.onGetPcmFrame(mPcmBuffer, size);
                         }
@@ -145,13 +148,13 @@ public class SrsPublisher {
     }
 
     public void startEncode() {
-        if (!mEncoder.start()) {
+        if (!mEncoder.start()) {  //开始编码
             return;
         }
 
-        mCameraView.enableEncoding();
+        mCameraView.enableEncoding(); //采集图像
 
-        startAudio();
+        startAudio(); //采集声音
     }
 
     public void stopEncode() {
